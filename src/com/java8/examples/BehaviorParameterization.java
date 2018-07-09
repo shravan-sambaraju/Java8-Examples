@@ -5,9 +5,9 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-public class BehaviorParameterization {
+class BehaviorParameterization {
 
-	public static class Apple {
+	private static class Apple {
 
 		private String colour = "";
 		private Integer weight = 0;
@@ -17,19 +17,19 @@ public class BehaviorParameterization {
 			this.colour = colour;
 		}
 
-		public String getColour() {
+		private String getColour() {
 			return colour;
 		}
 
-		public void setColour(String colour) {
+		private void setColour(String colour) {
 			this.colour = colour;
 		}
 
-		public Integer getWeight() {
+		private Integer getWeight() {
 			return weight;
 		}
 
-		public void setWeight(Integer weight) {
+		private void setWeight(Integer weight) {
 			this.weight = weight;
 		}
 
@@ -40,41 +40,36 @@ public class BehaviorParameterization {
 	}
 
 	interface ApplePredicate {
-
 		public boolean test(Apple a);
 	}
 
-	static class AppleWeightPredicate implements ApplePredicate {
+	private static class AppleWeightPredicate implements ApplePredicate {
 
 		@Override
 		public boolean test(Apple a) {
 			// TODO Auto-generated method stub
 			return a.getWeight() > 150;
 		}
-
 	}
 
-	static class AppleColourPredicate implements ApplePredicate {
+	private static class AppleColourPredicate implements ApplePredicate {
 
 		@Override
 		public boolean test(Apple a) {
 			// TODO Auto-generated method stub
 			return "green".equalsIgnoreCase(a.getColour());
 		}
-
 	}
 
-	static class AppleRedAndHeavyPredicate implements ApplePredicate {
-
+	private static class AppleRedAndHeavyPredicate implements ApplePredicate {
 		@Override
 		public boolean test(Apple a) {
 			// TODO Auto-generated method stub
 			return "red".equalsIgnoreCase(a.getColour()) && a.getWeight() > 150;
 		}
-
 	}
 
-	public static List<Apple> filter(List<Apple> inventory, ApplePredicate p) {
+	private static List<Apple> filter(List<Apple> inventory, ApplePredicate p) {
 		List<Apple> result = new ArrayList<>();
 		for (Apple apple : inventory) {
 			if (p.test(apple)) {
@@ -101,16 +96,13 @@ public class BehaviorParameterization {
 
 			@Override
 			public boolean test(Apple a) {
-				// TODO Auto-generated method stub
 				return "red".equalsIgnoreCase(a.getColour());
 			}
 
 		});
 		System.out.println(redApples);
-
 		List<Apple> greenApples2 = filter(inventory, (Apple a) -> "green".equalsIgnoreCase(a.getColour()));
 		System.out.println(greenApples2);
-
 		System.out.println(inventory);
 
 		// anonymous class
@@ -124,12 +116,8 @@ public class BehaviorParameterization {
 
 		// without type inference
 		// inventory.sort((a1, a2) -> a1.getWeight().compareTo(a2.getWeight()));
-
 		// with type inference
 		inventory.sort((Apple a1, Apple a2) -> a1.getWeight().compareTo(a2.getWeight()));
-
 		System.out.println(inventory);
-
 	}
-
 }

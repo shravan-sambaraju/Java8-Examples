@@ -7,7 +7,7 @@ import static java.util.stream.Collectors.*;
 
 class StreamsGroupingExample {
 
-	static class Dish {
+	private static class Dish {
 
 		private final String name;
 		private final boolean vegetarian;
@@ -21,19 +21,19 @@ class StreamsGroupingExample {
 			this.type = type;
 		}
 
-		public String getName() {
+		private String getName() {
 			return name;
 		}
 
-		public boolean isVegetarian() {
+		private boolean isVegetarian() {
 			return vegetarian;
 		}
 
-		public int getCalories() {
+		private int getCalories() {
 			return calories;
 		}
 
-		public Type getType() {
+		private Type getType() {
 			return type;
 		}
 
@@ -50,13 +50,13 @@ class StreamsGroupingExample {
 			return name;
 		}
 
-		public static final List<Dish> menu = Arrays.asList(new Dish("pork", false, 800, Dish.Type.MEAT),
+		private static final List<Dish> menu = Arrays.asList(new Dish("pork", false, 800, Dish.Type.MEAT),
 				new Dish("beef", false, 700, Dish.Type.MEAT), new Dish("chicken", false, 400, Dish.Type.MEAT),
 				new Dish("french fries", true, 530, Dish.Type.OTHER), new Dish("rice", true, 350, Dish.Type.OTHER),
 				new Dish("season fruit", true, 120, Dish.Type.OTHER), new Dish("pizza", true, 550, Dish.Type.OTHER),
 				new Dish("prawns", false, 400, Dish.Type.FISH), new Dish("salmon", false, 450, Dish.Type.FISH));
 
-		public static final Map<String, List<String>> dishTags = new HashMap<>();
+		private static final Map<String, List<String>> dishTags = new HashMap<>();
 		static {
 			dishTags.put("pork", Arrays.asList("greasy", "salty"));
 			dishTags.put("beef", Arrays.asList("salty", "roasted"));
@@ -72,7 +72,7 @@ class StreamsGroupingExample {
 
 	// In Java 7
 
-	public static List<String> getLowCaloricDishesNamesInJava7(List<Dish> dishes) {
+	private static List<String> getLowCaloricDishesNamesInJava7(List<Dish> dishes) {
 		List<Dish> lowCaloricDishes = new ArrayList<>();
 		for (Dish d : dishes) {
 			if (d.getCalories() < 400) {
@@ -92,56 +92,56 @@ class StreamsGroupingExample {
 	}
 
 	// In Java 8
-	public static List<String> getLowCaloricDishesNamesInJava8(List<Dish> dishes) {
+	private static List<String> getLowCaloricDishesNamesInJava8(List<Dish> dishes) {
 		return dishes.stream().filter(d -> d.getCalories() < 400).sorted(comparing(Dish::getCalories))
 				.map(Dish::getName).collect(toList());
 	}
 
-	public static List<String> getThreeHighCaloricDishNames(List<Dish> dishes) {
+	private static List<String> getThreeHighCaloricDishNames(List<Dish> dishes) {
 		return dishes.stream().filter(d -> d.getCalories() > 500).map(Dish::getName).limit(3).collect(toList());
 
 	}
 
-	public static List<Dish> getVegetarianDishes(List<Dish> dishes) {
+	private static List<Dish> getVegetarianDishes(List<Dish> dishes) {
 		return dishes.stream().filter(Dish::isVegetarian).collect(toList());
 
 	}
 
-	public static List<Dish> getFirstThreeHighCaloricDishNames(List<Dish> dishes) {
+	private static List<Dish> getFirstThreeHighCaloricDishNames(List<Dish> dishes) {
 		return dishes.stream().filter(d -> d.getCalories() > 500).limit(3).collect(toList());
 
 	}
 
-	public static List<Dish> skipFirstMeatDishNames(List<Dish> dishes) {
+	private static List<Dish> skipFirstMeatDishNames(List<Dish> dishes) {
 		return dishes.stream().filter(d -> d.getType() == Dish.Type.MEAT).skip(2).collect(toList());
 
 	}
 
 	// Finding
 
-	public static boolean isVegetarianFriendlyMenu(List<Dish> dishes) {
+	private static boolean isVegetarianFriendlyMenu(List<Dish> dishes) {
 		return dishes.stream().anyMatch(Dish::isVegetarian);
 	}
 
-	public static boolean isHealthyMenu(List<Dish> dishes) {
+	private static boolean isHealthyMenu(List<Dish> dishes) {
 		return dishes.stream().allMatch(d -> d.getCalories() < 1000);
 	}
 
-	public static boolean isHealthyMenu2(List<Dish> dishes) {
+	private static boolean isHealthyMenu2(List<Dish> dishes) {
 		return dishes.stream().noneMatch(d -> d.getCalories() >= 1000);
 	}
 
-	public static Optional<Dish> findVegetarianDish(List<Dish> dishes) {
+	private static Optional<Dish> findVegetarianDish(List<Dish> dishes) {
 		return dishes.stream().filter(Dish::isVegetarian).findAny();
 	}
 
 	// Grouping
 
-	public static Map<Dish.Type, List<Dish>> groupDishesByType(List<Dish> dishes) {
+	private static Map<Dish.Type, List<Dish>> groupDishesByType(List<Dish> dishes) {
 		return Dish.menu.stream().collect(groupingBy(Dish::getType));
 	}
 
-	public static Map<Dish.Type, List<String>> groupDishNamesByType(List<Dish> dishes) {
+	private static Map<Dish.Type, List<String>> groupDishNamesByType(List<Dish> dishes) {
 		return Dish.menu.stream().collect(groupingBy(Dish::getType, mapping(Dish::getName, toList())));
 	}
 
@@ -157,7 +157,7 @@ class StreamsGroupingExample {
 	 * dish.getCalories() > 500, toList()))); }
 	 */
 
-	public static Map<Dish.CaloricLevel, List<Dish>> groupDishesByCaloricLevel(List<Dish> dishes) {
+	private static Map<Dish.CaloricLevel, List<Dish>> groupDishesByCaloricLevel(List<Dish> dishes) {
 		return Dish.menu.stream().collect(groupingBy(dish -> {
 			if (dish.getCalories() <= 400)
 				return Dish.CaloricLevel.DIET;
@@ -168,7 +168,7 @@ class StreamsGroupingExample {
 		}));
 	}
 
-	public static Map<Dish.Type, Map<Dish.CaloricLevel, List<Dish>>> groupDishedByTypeAndCaloricLevel(
+	private static Map<Dish.Type, Map<Dish.CaloricLevel, List<Dish>>> groupDishedByTypeAndCaloricLevel(
 			List<Dish> dishes) {
 		return Dish.menu.stream().collect(groupingBy(Dish::getType, groupingBy((Dish dish) -> {
 			if (dish.getCalories() <= 400)
@@ -180,25 +180,25 @@ class StreamsGroupingExample {
 		})));
 	}
 
-	public static Map<Dish.Type, Long> countDishesInGroups(List<Dish> dishes) {
+	private static Map<Dish.Type, Long> countDishesInGroups(List<Dish> dishes) {
 		return Dish.menu.stream().collect(groupingBy(Dish::getType, counting()));
 	}
 
-	public static Map<Dish.Type, Optional<Dish>> mostCaloricDishesByType(List<Dish> dishes) {
+	private static Map<Dish.Type, Optional<Dish>> mostCaloricDishesByType(List<Dish> dishes) {
 		return Dish.menu.stream().collect(groupingBy(Dish::getType,
 				reducing((Dish d1, Dish d2) -> d1.getCalories() > d2.getCalories() ? d1 : d2)));
 	}
 
-	public static Map<Dish.Type, Dish> mostCaloricDishesByTypeWithoutOptionals(List<Dish> dishes) {
+	private static Map<Dish.Type, Dish> mostCaloricDishesByTypeWithoutOptionals(List<Dish> dishes) {
 		return Dish.menu.stream().collect(groupingBy(Dish::getType,
 				collectingAndThen(reducing((d1, d2) -> d1.getCalories() > d2.getCalories() ? d1 : d2), Optional::get)));
 	}
 
-	public static Map<Dish.Type, Integer> sumCaloriesByType(List<Dish> dishes) {
+	private static Map<Dish.Type, Integer> sumCaloriesByType(List<Dish> dishes) {
 		return Dish.menu.stream().collect(groupingBy(Dish::getType, summingInt(Dish::getCalories)));
 	}
 
-	public static Map<Dish.Type, Set<Dish.CaloricLevel>> caloricLevelsByType(List<Dish> dishes) {
+	private static Map<Dish.Type, Set<Dish.CaloricLevel>> caloricLevelsByType(List<Dish> dishes) {
 		return Dish.menu.stream().collect(groupingBy(Dish::getType, mapping(dish -> {
 			if (dish.getCalories() <= 400)
 				return Dish.CaloricLevel.DIET;
@@ -211,26 +211,26 @@ class StreamsGroupingExample {
 
 	// Reducing and Summarizing
 
-	static Comparator<Dish> dishCaroliesComparator = Comparator.comparingInt(Dish::getCalories);
+	private static Comparator<Dish> dishCaroliesComparator = Comparator.comparingInt(Dish::getCalories);
 
-	public static Optional<Dish> mostCalorieDish(List<Dish> dishes) {
+	private static Optional<Dish> mostCalorieDish(List<Dish> dishes) {
 		return dishes.stream().collect(maxBy(dishCaroliesComparator));
 
 	}
 
-	public static int totalCalories(List<Dish> dishes) {
+	private static int totalCalories(List<Dish> dishes) {
 		return dishes.stream().collect(summingInt(Dish::getCalories));
 
 	}
 
 	// Partitioning
 
-	public static Map<Boolean, List<Dish>> partitionedMenu(List<Dish> dishes) {
+	private static Map<Boolean, List<Dish>> partitionedMenu(List<Dish> dishes) {
 		return dishes.stream().collect(partitioningBy(Dish::isVegetarian));
 
 	}
 
-	public static Map<Boolean, Map<Dish.Type, List<Dish>>> partitionedGroupedMenu(List<Dish> dishes) {
+	private static Map<Boolean, Map<Dish.Type, List<Dish>>> partitionedGroupedMenu(List<Dish> dishes) {
 		return dishes.stream().collect(partitioningBy(Dish::isVegetarian, groupingBy(Dish::getType)));
 
 	}
@@ -268,7 +268,7 @@ class StreamsGroupingExample {
 
 		Optional<Dish> dish = findVegetarianDish(Dish.menu);
 		dish.ifPresent(d -> System.out.println(d.getName()));
-		
+
 		System.out.println(groupDishesByType(Dish.menu));
 		System.out.println(groupDishNamesByType(Dish.menu));
 		System.out.println(groupDishesByCaloricLevel(Dish.menu));
@@ -282,7 +282,5 @@ class StreamsGroupingExample {
 		System.out.println(totalCalories(Dish.menu));
 		System.out.println(partitionedMenu(Dish.menu));
 		System.out.println(partitionedGroupedMenu(Dish.menu));
-
 	}
-
 }

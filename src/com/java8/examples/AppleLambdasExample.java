@@ -5,9 +5,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class AppleLambdasExample {
+class AppleLambdasExample {
 
-	public static class Apple {
+	private static class Apple {
 
 		private String colour = "";
 		private int weight = 0;
@@ -17,19 +17,19 @@ public class AppleLambdasExample {
 			this.colour = colour;
 		}
 
-		public String getColour() {
+		private String getColour() {
 			return colour;
 		}
 
-		public void setColour(String colour) {
+		private void setColour(String colour) {
 			this.colour = colour;
 		}
 
-		public int getWeight() {
+		private int getWeight() {
 			return weight;
 		}
 
-		public void setWeight(int weight) {
+		private void setWeight(int weight) {
 			this.weight = weight;
 		}
 
@@ -39,16 +39,15 @@ public class AppleLambdasExample {
 
 	}
 
-	public static boolean isGreenApple(Apple apple) {
+	private static boolean isGreenApple(Apple apple) {
 		return "green".equalsIgnoreCase(apple.getColour());
-
 	}
 
-	public static boolean isHeavyApple(Apple apple) {
+	private static boolean isHeavyApple(Apple apple) {
 		return apple.getWeight() > 150;
 	}
 
-	public static List<Apple> filterApples(List<Apple> inventory, Predicate<Apple> p) {
+	private static List<Apple> filterApples(List<Apple> inventory, Predicate<Apple> p) {
 		List<Apple> result = new ArrayList<>();
 		for (Apple apple : inventory) {
 			if (p.test(apple)) {
@@ -56,7 +55,6 @@ public class AppleLambdasExample {
 			}
 		}
 		return result;
-
 	}
 
 	public static void main(String args[]) {
@@ -79,6 +77,5 @@ public class AppleLambdasExample {
 		List<Apple> weirdApples = filterApples(inventory,
 				(Apple a) -> a.getWeight() < 80 || "brown".equalsIgnoreCase(a.getColour()));
 		System.out.println(weirdApples);
-
 	}
 }
