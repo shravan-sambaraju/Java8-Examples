@@ -5,8 +5,9 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 import static java.util.Comparator.comparing;
 
-public class TraderTransaction {
-	static class Trader {
+class TraderTransaction {
+
+	private static class Trader {
 
 		private String name;
 		private String city;
@@ -16,15 +17,15 @@ public class TraderTransaction {
 			this.city = c;
 		}
 
-		public String getName() {
+		private String getName() {
 			return this.name;
 		}
 
-		public String getCity() {
+		private String getCity() {
 			return this.city;
 		}
 
-		public void setCity(String newCity) {
+		private void setCity(String newCity) {
 			this.city = newCity;
 		}
 
@@ -33,7 +34,7 @@ public class TraderTransaction {
 		}
 	}
 
-	static class Transaction {
+	private static class Transaction {
 
 		private Trader trader;
 		private int year;
@@ -45,15 +46,15 @@ public class TraderTransaction {
 			this.value = value;
 		}
 
-		public Trader getTrader() {
+		private Trader getTrader() {
 			return this.trader;
 		}
 
-		public int getYear() {
+		private int getYear() {
 			return this.year;
 		}
 
-		public int getValue() {
+		private int getValue() {
 			return this.value;
 		}
 
@@ -100,5 +101,4 @@ public class TraderTransaction {
 		int highestValue = transactions.stream().map(Transaction::getValue).reduce(0, Integer::max);
 		System.out.println(highestValue);
 	}
-
 }
